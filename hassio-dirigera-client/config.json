@@ -1,6 +1,6 @@
 {
   "name": "Dirigera-client",
-  "version": "2022.11.0",
+  "version": "2022.11.1",
   "slug": "dirigera-client",
   "description": "Unofficial client API for IKEA's new Smarthome Hub DIRIGERA.",
   "url": "https://github.com/TheMrBooyah/hassio-dirigera-client",
@@ -18,14 +18,16 @@
     "mqtt-host": "core-mosquitto",
     "port": 1883,
     "username": "mqtt",
-    "password": ""
+    "password": "",
+    "token": ""
   },
   "schema": {
     "dirigera-host": "str",
     "mqtt-host": "str",
     "port": "int",
     "username": "str",
-    "password": "password"
+    "password": "password",
+    "token": "password"
   },
   "image": "themrbooyah/hassio-dirigera-client-{arch}"
 }
