@@ -18,17 +18,17 @@ For more information about what is known to work/not work visit [dvdgeisler's re
 
 This add-on requires the following configuration:
 * dirigera_host
-  The hostname or IP-address the DIRIGERA is running on
+  * The hostname or IP-address the DIRIGERA is running on
 * mqtt_host
-  The hostname or IP-address of your Mosquitto broker. If running one in home assistant, you can leave this on the default value 'core-mosquitto'
+  * The hostname or IP-address of your Mosquitto broker. If running one in home assistant, you can leave this on the default value 'core-mosquitto'
 * port
-  The port your Mosquitto broker is running on. Default '1883'
+  * The port your Mosquitto broker is running on. Default '1883'
 * username
-  The username for your Mosquitto broker. Only required when your Mosquitto broker requires authentication.
+  * The username for your Mosquitto broker. Only required when your Mosquitto broker requires authentication.
 * password
-  The password for your Mosquitto broker. Only required when your Mosquitto broker requires authentication.
+  * The password for your Mosquitto broker. Only required when your Mosquitto broker requires authentication.
 * token
-  The Authentication Token to communicate with your DIRIGERA gateway. Follow [the instructions from this page](https://github.com/dvdgeisler/DirigeraClient#integration-to-home-assistant) to get your access token.
+  * The Authentication Token to communicate with your DIRIGERA gateway. Follow [the instructions from this page](https://github.com/dvdgeisler/DirigeraClient#integration-to-home-assistant) to get your access token.
 
 ## Support
 
