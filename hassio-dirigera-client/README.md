@@ -1,132 +1,46 @@
-# Dirigera Client API
+# Home Assistant Add-on: DIRIGERA API Client
 
-Unofficial client API for IKEA's new Smarthome Hub
-[DIRIGERA](https://github.com/wjtje/DIRIGERA). The client API
-uses DIRIGERA's REST interface at port 8443. The vast majority
-of interfaces have been implemented. However, most are
-barely tested, and some are known as inoperable.
+![Supports aarch64 Architecture][aarch64-shield]
+![Supports amd64 Architecture][amd64-shield]
+![Supports armhf Architecture][armhf-shield]
+![Supports armv7 Architecture][armv7-shield]
+![Supports i386 Architecture][i386-shield]
 
-## What is known to work
-* Pair API with DIRIGERA
-* Dump DIRIGERA's data model
-* Fetch and edit devices, i.e.:
-  * Gateway
-    * DIRIGERA Hub for smart products
-  * Repeater
-    * TRADFRI signal repeater
-  * Light & Driver
-    * STOFTMOLN ceiling/wall lamp WW24
-    * TRADFRI bulb E27 CWS 806lm
-    * TRADFRI bulb E27 CWS opal 600lm
-    * TRADFRI bulb E27 WS globe opal 1055lm
-    * TRADFRI bulb E27 WS opal 980lm
-    * TRADFRI bulb T120 E27 WS opal 470lm
-    * TRADFRI bulb E14 WS opal 400lm
-    * TRADFRI bulb GU10 WS 400lm
-    * TRADFRI Driver 10W
-    * TRADFRI Driver 30W
-  * Light-Controller
-    * Remote Control N2
-    * TRADFRI on/off switch
-    * TRADFRI remote control
-  * Sound-Controller 
-    * SYMFONISK Sound Controller
-  * Blinds-Controller
-    * TRADFRI open/close remote
-  * Motion-Sensor 
-    * TRADFRI motion sensor
-  * Shortcut-Controller
-    * TRADFRI SHORTCUT Button
-  * Outlet
-    * ASKVADER on/off switch
-    * TRADFRI control outlet
-    * Aqara Smart Plug (lumi.plug.maeu01)
-  * Air Purifier
-    * STARKVIND Air purifier
-  * Blinds
-    * PRAKTLYSING cellular blind
-* Check for firmware updates
-* (Un-)Link devices (e.g., light controller with light bulb)
-* List music playlists and favorites
-* Create, manipulate, and delete rooms
-* Create, manipulate, and delete device-sets
-* Create, manipulate, and delete scenes (without actions and triggers)
-* Manipulate, and delete users
+## About
 
-### Example Code
-The package `dirigera-client-examples` provides several example 
-applications, which essentially cover the aforementioned points.
-However, to give you a glimpse of the look and feel of the library, 
-here's an example:
-```java
-@SpringBootApplication
-@ComponentScan(basePackageClasses = {DirigeraClientApi.class})
-public class MyApplication {
-    @Bean
-    public CommandLineRunner run(final DirigeraApi api) {
-        return (String... args) -> {
-          api.pairIfRequired().block(); // pair gateway if required
+DIRIGERA API client is an unofficial client API for the IKEA's new Smart home Hub [DIRIGERA](https://github.com/wjtje/DIRIGERA).
+The API uses the DIRIGERA's REST interface at port 8443. 
+The vast majority has been implemented. However, most are barely tested and some are known as inoperable.
 
-          api.device.light.all() // fetch all light devices from hub
-                  .flatMapMany(Flux::fromIterable)
-                  .flatMap(d -> api.device.light.turnOn(d)) // turn on lights
-                  .flatMap(d -> api.device.light.setLevel(d, 100)) // turn on lights
-                  .flatMap(d -> api.device.light.setTemperature(d, d.attributes.state.color.temperatureMax)) // set color temperature
-                  .blockLast();
-        };
-    }
+For more information about what is known to work/not work visit [dvdgeisler's repository](https://github.com/dvdgeisler/DirigeraClient)
 
-    public static void main(String[] args) {
-        SpringApplication.run(MyApplication.class, args).close();
-    }
-}
-```
+## Configuration
 
-## What does not work
+This add-on requires the following configuration:
+* dirigera_host
+  The hostname or IP-address the DIRIGERA is running on
+* mqtt_host
+  The hostname or IP-address of your Mosquitto broker. If running one in home assistant, you can leave this on the default value 'core-mosquitto'
+* port
+  The port your Mosquitto broker is running on. Default '1883'
+* username
+  The username for your Mosquitto broker. Only required when your Mosquitto broker requires authentication.
+* password
+  The password for your Mosquitto broker. Only required when your Mosquitto broker requires authentication.
+* token
+  The Authentication Token to communicate with your DIRIGERA gateway. Follow [the instructions from this page](https://github.com/dvdgeisler/DirigeraClient#integration-to-home-assistant) to get your access token.
 
-* Everything which is not defined in API's Data-Model.
-  * The API's data model is strictly typed, but there are still many 
-    devices missing. Hence, it's very likely you have a device linked 
-    to your gateway, which is not depicted by the API. In this case, the 
-    JSON deserialization will likely fail as soon as one of the endpoints
-    returns the respective device data.
-  * You may help us to overcome this limitation by providing us your 
-    Gateway-Dump (see [How to contribute](#how-to-contribute)).
-* Scene actions and triggers.
+## Support
 
-### How to contribute
+Got questions?
 
-The most significant pain point is the limitation of the API data model. 
-You can help us to improve it, and to support progressively more devices.
+Do you have questions about or problems with the add-on? Create a support ticket [here](https://github.com/TheMrBooyah/hassio-dirigera-client/issues)
 
-To do so, run the [Dump Application](dirigera-client-dump/src/main/java/de/dvdgeisler/iot/dirigera/client/dump/DumpApplication.java). 
-This application reads the data model of your DIRIGERA and outputs it as JSON. Based on the dump, 
-we can determine at which points the API data model deviates or is 
-incomplete. You may submit the generated dump as an issue to GitHub.
+Do you have questions about or problems with the client API? Create a support ticket [here](https://github.com/dvdgeisler/DirigeraClient/issues)
 
-#### Build and run the Dump Application
-```bash
-./mvnw package
-java -jar ./dirigera-client-dump/target/dirigera-client-dump-0.0.1-SNAPSHOT.jar --dirigera.hostname=<DIRIGERA-IP-ADDRESS>
-```
 
-## Integration to Home Assistant
-
-Lights and sockets can be integrated into Home Assistant via MQTT (more devices will follow).
-Therefore, the application [dirigera-client-mqtt](dirigera-client-mqtt/src/main/java/de/dvdgeisler/iot/dirigera/client/mqtt/DirigeraClientMqttApplication.java) 
-is started as a service giving the hostnames of the Dirigera, and the MQTT broker, e.g.:
-```bash
-./mvnw package
-java -jar dirigera-client-mqtt/target/dirigera-client-mqtt-0.0.1-SNAPSHOT.jar \
-  --dirigera.hostname=<DIRIGERA-IP-ADDRESS> \
-  --dirigera.mqtt.hostname=<MQTT-IP-ADDRESS (Default: localhost)> \
-  --dirigera.mqtt.port=<MQTT-PORT (Default: 1883)>
-```
-Home Assistant will create entities for supported devices, based on its MQTT auto discovery approach.
-
-![](img/hass-integration.png)
-
-## Other repos to dig in
-
-* [wjtje/DIRIGERA](https://github.com/wjtje/DIRIGERA)
-* [mattias73andersson/dirigera-client-poc](https://github.com/mattias73andersson/dirigera-client-poc)
+[aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
+[amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
+[armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
+[armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
+[i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
