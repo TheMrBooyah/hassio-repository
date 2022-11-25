@@ -1,3 +1,6 @@
+Version 2022.11.12
+- [Fixed Colour Temperature calculation issue](https://github.com/dvdgeisler/DirigeraClient/issues/33)
+
 Version 2022.11.11
 - Fixed layout of readme file
 
