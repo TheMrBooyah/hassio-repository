@@ -1,3 +1,6 @@
+Version 2022.12.2
+- Fixed image
+
 Version 2022.12.1
 - Moved to fixed baseline for add-on
 - Checkout the full changelog [here](https://github.com/dvdgeisler/DirigeraClient/releases/tag/v0.1.0)
