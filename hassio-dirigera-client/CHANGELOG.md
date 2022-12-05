@@ -1,4 +1,4 @@
-Version 2022.12.2
+Version 2022.12.3
 - Fixed image
 
 Version 2022.12.1
