@@ -1,3 +1,7 @@
+Version 2023.1.12
+- Updated to v0.1.1 of the DirigeraClient
+- Checkout the full changelog [here](https://github.com/dvdgeisler/DirigeraClient/releases/tag/v0.1.1)
+
 Version 2022.12.3
 - Fixed image
 
