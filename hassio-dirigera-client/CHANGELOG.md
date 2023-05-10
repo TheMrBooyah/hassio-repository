@@ -1,3 +1,6 @@
+Version 2023.5.1
+- Updated to v0.1.2 of the DirigeraClient
+
 Version 2023.1.12.1
 - Added port to command
 
