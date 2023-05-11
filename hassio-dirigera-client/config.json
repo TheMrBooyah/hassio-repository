@@ -1,6 +1,6 @@
 {
   "name": "Dirigera-client",
-  "version": "2023.5.2",
+  "version": "2023.5.3",
   "slug": "dirigera-client",
   "description": "Unofficial client API for IKEA's new Smarthome Hub DIRIGERA.",
   "url": "https://github.com/TheMrBooyah/hassio-dirigera-client",
