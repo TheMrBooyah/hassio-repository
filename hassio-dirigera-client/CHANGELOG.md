@@ -1,3 +1,6 @@
+Version 2023.8.1
+- Updated to v0.1.7 of the DirigeraClient
+ 
 Version 2023.7.1
 - Updated to v0.1.6 of the DirigeraClient
 
